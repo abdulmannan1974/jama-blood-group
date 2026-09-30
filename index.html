@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The JAMA Blood Group</title>
+<style>
+/* Layout: magazine spread. Wide hero with faded red cells, two-column narrative, floated figures, pull quotes, full-width evidence chain. */
+:root{
+  --bg:#FAF9F5; --fg:#141413; --muted:#5E5D57; --faint:#87867F;
+  --clay:#D97757; --clay-ink:#B85C3E; --oat:#E3DACC; --olive:#788C5D; --rust:#B04A3F;
+  --panel:#F0EEE6; --line:#D1CFC5; --card:#FFFFFF; --cell:#C9503F; --cell-soft:#E9A796;
+  --serif:ui-serif,"Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1C1B18; --fg:#ECE9E0; --muted:#B5B2A8; --faint:#8F8C84;
+  --clay:#E48B6C; --clay-ink:#EBA084; --oat:#3A352D; --olive:#9DB27F; --rust:#DC7A6C;
+  --panel:#26251F; --line:#46443D; --card:#23221E; --cell:#D8604E; --cell-soft:#7A3A30; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1C1B18; --fg:#ECE9E0; --muted:#B5B2A8; --faint:#8F8C84;
+  --clay:#E48B6C; --clay-ink:#EBA084; --oat:#3A352D; --olive:#9DB27F; --rust:#DC7A6C;
+  --panel:#26251F; --line:#46443D; --card:#23221E; --cell:#D8604E; --cell-soft:#7A3A30; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:16px;line-height:1.65;margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:24px;padding-block:0 120px}
+@media (max-width:480px){.wrap{padding-inline:16px}}
+h1,h2,h3{font-family:var(--serif);font-weight:500;text-wrap:balance;margin:0}
+h2{font-size:30px;line-height:1.2}
+h3{font-size:20px;line-height:1.3;margin-bottom:8px}
+p{margin:0 0 1em}
+.label{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--clay-ink)}
+.mono{font-family:var(--mono);font-size:.9em}
+em.gene{font-style:italic}
+a{color:var(--clay-ink)}
+:focus-visible{outline:2px solid var(--clay);outline-offset:3px}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;padding-block:72px 48px;border-bottom:1.5px solid var(--line);margin-bottom:48px}
+.hero-bg{position:absolute;inset:0;pointer-events:none;opacity:.16}
+.hero-bg svg{width:100%;height:100%}
+.hero-num{position:absolute;right:-8px;top:10px;font-family:var(--serif);font-size:clamp(160px,30vw,300px);line-height:1;color:var(--clay);opacity:.14;pointer-events:none}
+.hero-inner{position:relative;max-width:720px}
+.hero h1{font-size:clamp(38px,6.4vw,62px);line-height:1.05;margin-block:14px 18px}
+.hero h1 span{color:var(--clay-ink)}
+.dek{font-family:var(--serif);font-size:clamp(18px,2.4vw,22px);line-height:1.45;color:var(--muted);max-width:620px}
+.byline{margin-top:24px;display:flex;flex-wrap:wrap;gap:8px 20px;font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.04em}
+
+/* Sections */
+section{margin-block:64px}
+.sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.rule{border:0;border-top:1.5px solid var(--line);margin:14px 0 24px}
+.cols{column-gap:44px}
+@media (min-width:820px){.cols{column-count:2}.cols p:first-child::first-letter{float:left;font-family:var(--serif);font-size:64px;line-height:.85;padding:6px 8px 0 0;color:var(--clay-ink)}}
+.cols p{break-inside:avoid-column}
+
+/* Pull quote */
+.pull{margin:40px auto;max-width:760px;text-align:left;border-top:1.5px solid var(--clay);border-bottom:1.5px solid var(--clay);padding-block:22px}
+.pull p{font-family:var(--serif);font-size:clamp(21px,3vw,28px);line-height:1.35;margin:0}
+.pull cite{display:block;margin-top:10px;font-family:var(--mono);font-size:11.5px;font-style:normal;letter-spacing:.06em;color:var(--faint);text-transform:uppercase}
+
+/* Callouts */
+.callout{background:var(--oat);border-radius:12px;padding:20px 22px;margin-block:24px}
+.callout h3{font-size:18px;margin-bottom:8px}
+.callout p:last-child,.callout ul:last-child{margin-bottom:0}
+.callout.warn{background:transparent;border:1.5px solid var(--rust)}
+.callout.warn .label{color:var(--rust)}
+.callout ul{padding-left:20px;margin:0 0 1em}
+
+/* Float figure */
+figure{margin:0}
+figcaption{font-size:13px;color:var(--faint);line-height:1.5;margin-top:8px}
+svg text{font-family:var(--sans)}
+
+/* Analogy chain */
+.chain{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-block:28px}
+@media (max-width:760px){.chain{grid-template-columns:1fr}}
+.chain div{border-top:3px solid var(--clay);padding-top:12px;min-width:0}
+.chain div:nth-child(2){border-color:var(--olive)}
+.chain div:nth-child(3){border-color:var(--rust)}
+.chain p{margin:6px 0 0;font-size:15px}
+
+/* Table */
+.tscroll{overflow-x:auto;margin-block:20px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--panel);font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:500;color:var(--muted)}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.pos{color:var(--rust);font-weight:600}
+.neg{color:var(--olive);font-weight:600}
+
+/* Evidence chain */
+.steps{list-style:none;padding:0;margin:28px 0;display:grid;gap:0}
+.step{display:grid;grid-template-columns:56px minmax(0,1fr);gap:18px;position:relative;padding-bottom:26px}
+.step:not(:last-child)::before{content:"";position:absolute;left:27px;top:52px;bottom:0;width:1.5px;background:var(--line)}
+.step .n{width:56px;height:56px;border-radius:50%;border:1.5px solid var(--clay);display:grid;place-items:center;font-family:var(--serif);font-size:22px;color:var(--clay-ink);background:var(--bg)}
+.step h3{font-size:19px;margin-top:4px}
+.step .q{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.04em;margin:4px 0 6px}
+.step p{margin:0 0 6px;font-size:15px}
+.step .ans{display:inline-block;font-family:var(--mono);font-size:12px;padding:3px 9px;border-radius:999px;background:var(--panel);color:var(--fg)}
+.step.key .n{background:var(--clay);color:var(--bg)}
+
+/* Stumbling */
+.traps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}
+@media (max-width:760px){.traps{grid-template-columns:1fr}}
+.trap{border:1.5px solid var(--line);border-radius:12px;padding:18px 20px;min-width:0}
+.trap p{margin:6px 0 0;font-size:15px}
+
+/* Stamps */
+.stamps{counter-reset:s;display:grid;gap:18px;margin-top:24px}
+.stamp{counter-increment:s;display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;align-items:start}
+.stamp::before{content:counter(s);font-family:var(--serif);font-size:36px;line-height:1;color:var(--clay-ink)}
+.stamp p{font-family:var(--serif);font-size:19px;line-height:1.45;margin:0}
+
+/* MCQ */
+.mcq{border:1.5px solid var(--line);border-radius:12px;padding:20px 22px;margin-block:18px;background:var(--card)}
+.mcq .stem{margin:8px 0 14px}
+.opts{display:grid;gap:8px}
+.opt{all:unset;box-sizing:border-box;display:block;cursor:pointer;border:1.5px solid var(--line);border-radius:8px;padding:10px 14px;font-size:15px;line-height:1.45}
+.opt:hover{border-color:var(--clay)}
+.opt:focus-visible{outline:2px solid var(--clay);outline-offset:2px}
+.opt.right{border-color:var(--olive);background:color-mix(in srgb,var(--olive) 14%,transparent)}
+.opt.wrong{border-color:var(--rust);background:color-mix(in srgb,var(--rust) 12%,transparent)}
+.opt b{font-family:var(--mono);font-weight:600;margin-right:8px}
+.expl{margin-top:14px;font-size:15px;border-top:1px solid var(--line);padding-top:12px}
+.expl ul{padding-left:18px;margin:6px 0}
+
+/* Ref card */
+.card{border:1.5px solid var(--fg);border-radius:12px;padding:26px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 32px}
+@media (max-width:700px){.card{grid-template-columns:1fr;padding:20px}}
+.card .full{grid-column:1/-1}
+.card h3{font-size:24px}
+.card dt{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.card dd{margin:2px 0 0;font-size:15px}
+
+/* Speak */
+.speak{font-family:var(--serif);font-size:18px;line-height:1.6;max-width:680px}
+
+/* Family */
+.family{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.chip{font-family:var(--mono);font-size:12px;padding:6px 12px;border-radius:999px;border:1.5px solid var(--line)}
+.chip.now{border-color:var(--clay);color:var(--clay-ink)}
+
+
+/* Summary trio */
+.trio{list-style:none;padding:0;margin:8px 0 12px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px}
+.panel{position:relative;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:18px 18px 16px;min-width:0}
+.panel:nth-child(3){border-color:var(--rust)}
+.panel h3{font-size:18px;margin:6px 0 10px}
+.panel svg{display:block;width:100%;height:auto;margin:4px 0 10px}
+.panel ul{padding-left:18px;margin:0;font-size:14.5px;line-height:1.5}
+.panel li+li{margin-top:4px}
+.panel:not(:last-child)::after{content:"\2192";position:absolute;right:-26px;top:50%;transform:translateY(-50%);font-size:22px;color:var(--clay)}
+.kh{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;margin:4px 0 6px;font-weight:600}
+.kh.ok{color:var(--olive)} .kh.no{color:var(--rust);margin-top:14px}
+@media (max-width:860px){.trio{grid-template-columns:1fr;gap:30px}.panel:not(:last-child)::after{content:"\2193";right:auto;left:50%;top:auto;bottom:-29px;transform:translateX(-50%)}}
+/* Mechanism grid */
+.mech{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px 36px;align-items:start}
+.mech figure{grid-column:2;grid-row:1 / span 5}
+.mech > p{grid-column:1;margin:0}
+@media (max-width:860px){.mech{grid-template-columns:1fr}.mech figure{grid-column:1;grid-row:auto;width:100%;max-width:460px;margin:0 auto 8px}.mech > p{grid-column:1}}
+.mcq .status{margin-top:10px;font-size:14px;font-weight:600}
+.opt[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--fg)}
+/* Footer */
+.refs{font-size:13.5px;color:var(--muted)}
+.refs ol{padding-left:20px}
+.refs li{margin-bottom:8px}
+.note{font-size:13px;color:var(--faint)}
+@media (prefers-reduced-motion:no-preference){.opt{transition:border-color .15s,background .15s}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <svg viewBox="0 0 1000 420" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <radialGradient id="rbc" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" style="stop-color:var(--cell-soft)"/>
+          <stop offset="45%" style="stop-color:var(--cell-soft)"/>
+          <stop offset="80%" style="stop-color:var(--cell)"/>
+          <stop offset="100%" style="stop-color:var(--cell)"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="640" cy="120" rx="92" ry="88" fill="url(#rbc)"/>
+      <ellipse cx="820" cy="300" rx="120" ry="112" fill="url(#rbc)"/>
+      <ellipse cx="520" cy="330" rx="62" ry="58" fill="url(#rbc)"/>
+      <ellipse cx="930" cy="80" rx="54" ry="50" fill="url(#rbc)"/>
+      <ellipse cx="360" cy="60" rx="40" ry="38" fill="url(#rbc)"/>
+      <ellipse cx="700" cy="400" rx="44" ry="40" fill="url(#rbc)"/>
+    </svg>
+  </div>
+  <div class="hero-num" aria-hidden="true">49</div>
+  <div class="hero-inner">
+    <div class="label">Blood🩸Doctor Review · Transfusion science · September 2026</div>
+    <h1>One letter, one family, <span>the 49th blood group</span></h1>
+    <p class="dek">How a pan-reactive antibody in a pregnant woman led to JAMA (ISBT 049), a blood group carried on an adhesion molecule most of us know from platelets. Bench to bedside, told as a case.</p>
+    <div class="byline"><span>Dr Abdul Mannan · Consultant Haematologist</span><span>Source: Mankelow, Tilley, Karamatic Crew et al. Vox Sang 2026</span><span>~12 min read</span></div>
+  </div>
+</header>
+
+<!-- SUMMARY VISUAL -->
+<section aria-labelledby="glance" class="summary">
+  <div class="sec-head"><span class="label">At a glance</span></div>
+  <h2 id="glance">Clue, proof and limits</h2>
+  <hr class="rule">
+  <ol class="trio">
+    <li class="panel">
+      <span class="label">1 · The family clue</span>
+      <h3>Everyone reacts, except two siblings</h3>
+      <svg viewBox="0 0 280 120" role="img" aria-label="Three red cells. Donor cells react with her plasma. Her own cells and her brother's cells do not react.">
+        <g><circle cx="48" cy="46" r="30" style="fill:var(--cell)"/><circle cx="48" cy="46" r="12" style="fill:var(--cell-soft)"/>
+        <text x="48" y="98" text-anchor="middle" font-size="13" style="fill:var(--fg)">Donor cells</text>
+        <text x="48" y="114" text-anchor="middle" font-size="12.5" font-weight="600" style="fill:var(--rust)">react</text></g>
+        <g><circle cx="140" cy="46" r="30" style="fill:var(--cell)"/><circle cx="140" cy="46" r="12" style="fill:var(--cell-soft)"/>
+        <text x="140" y="98" text-anchor="middle" font-size="13" style="fill:var(--fg)">Her cells</text>
+        <text x="140" y="114" text-anchor="middle" font-size="12.5" font-weight="600" style="fill:var(--olive)">no reaction</text></g>
+        <g><circle cx="232" cy="46" r="30" style="fill:var(--cell)"/><circle cx="232" cy="46" r="12" style="fill:var(--cell-soft)"/>
+        <text x="232" y="98" text-anchor="middle" font-size="13" style="fill:var(--fg)">Brother's cells</text>
+        <text x="232" y="114" text-anchor="middle" font-size="12.5" font-weight="600" style="fill:var(--olive)">no reaction</text></g>
+      </svg>
+      <ul>
+        <li>Pregnant woman, no known transfusion history</li>
+        <li>Moderate pan-reactive antibody by LISS IAT, first investigated in 2013</li>
+        <li>Still unresolved by reference serology in 2020</li>
+      </ul>
+    </li>
+    <li class="panel">
+      <span class="label">2 · The molecular proof</span>
+      <h3>One amino acid on D2 of JAM-A</h3>
+      <svg viewBox="0 0 280 150" role="img" aria-label="Two JAM-A molecules, each with two extracellular domains, D1 and D2, above the membrane. On the left, Arg215 on D2 marks JIMI-positive. On the right, Gln215 on D2 marks JIMI-negative. Schematic, not to scale.">
+        <rect x="0" y="104" width="280" height="14" style="fill:var(--oat)"/>
+        <g>
+          <line x1="72" y1="92" x2="72" y2="124" stroke-width="3" style="stroke:var(--fg)"/>
+          <ellipse cx="72" cy="30" rx="26" ry="20" stroke-width="2" style="fill:var(--card);stroke:var(--clay)"/>
+          <text x="72" y="35" text-anchor="middle" font-size="13" style="fill:var(--fg)">D1</text>
+          <ellipse cx="72" cy="74" rx="26" ry="20" stroke-width="2" style="fill:var(--card);stroke:var(--clay)"/>
+          <text x="72" y="79" text-anchor="middle" font-size="13" style="fill:var(--fg)">D2</text>
+          <circle cx="98" cy="74" r="7" style="fill:var(--clay)"/>
+          <text x="112" y="70" font-size="13" font-weight="600" style="fill:var(--clay-ink)">R</text>
+          <text x="72" y="142" text-anchor="middle" font-size="12.5" style="fill:var(--fg)">Arg215 · JIMI+</text>
+        </g>
+        <g>
+          <line x1="208" y1="92" x2="208" y2="124" stroke-width="3" style="stroke:var(--fg)"/>
+          <ellipse cx="208" cy="30" rx="26" ry="20" stroke-width="2" style="fill:var(--card);stroke:var(--clay)"/>
+          <text x="208" y="35" text-anchor="middle" font-size="13" style="fill:var(--fg)">D1</text>
+          <ellipse cx="208" cy="74" rx="26" ry="20" stroke-width="2" style="fill:var(--card);stroke:var(--clay)"/>
+          <text x="208" y="79" text-anchor="middle" font-size="13" style="fill:var(--fg)">D2</text>
+          <circle cx="234" cy="74" r="7" stroke-width="2" style="fill:var(--card);stroke:var(--olive)"/>
+          <text x="248" y="70" font-size="13" font-weight="600" style="fill:var(--olive)">Q</text>
+          <text x="208" y="142" text-anchor="middle" font-size="12.5" style="fill:var(--fg)">Gln215 · JIMI−</text>
+        </g>
+      </svg>
+      <ul>
+        <li>Both siblings homozygous for <em class="gene">F11R</em> c.644G&gt;A, p.Arg215Gln (exon 6)</li>
+        <li>Arg215 JAM-A inhibited her antibody; Gln215 JAM-A did not</li>
+        <li>Result: system <strong>JAMA, ISBT 049</strong>; antigen <strong>JIMI (JAMA1)</strong></li>
+      </ul>
+    </li>
+    <li class="panel">
+      <span class="label">3 · The clinical limits</span>
+      <h3>What was shown, and what was not</h3>
+      <p class="kh ok">Shown</p>
+      <ul>
+        <li>Antibody bound JAM-A on platelets in vitro</li>
+        <li>JIMI-negative cells still express JAM-A, at lower levels</li>
+        <li>No HDFN reported in four live births from six pregnancies</li>
+      </ul>
+      <p class="kh no">Not shown or not known</p>
+      <ul>
+        <li>Haemolytic transfusion reactions</li>
+        <li>HDFN risk beyond this one family</li>
+        <li>Platelet refractoriness or FNAIT</li>
+        <li>How common JIMI-negative people are</li>
+      </ul>
+    </li>
+  </ol>
+  <p class="note">Reported gnomAD global allele frequency for rs755819660: 0.0000044. This is the frequency of the variant allele, not of JIMI-negative people.</p>
+</section>
+
+
+<!-- LENS 1 STORY -->
+<section aria-labelledby="story">
+  <div class="sec-head"><span class="label">Lens 1 · The story</span></div>
+  <h2 id="story">A woman nobody could match</h2>
+  <hr class="rule">
+  <div class="cols">
+    <p>In 2013 a blood service laboratory in Israel received a sample from a pregnant woman of Arab ethnicity. She had never been transfused. Her plasma held an antibody of moderate strength that reacted by indirect antiglobulin test with every red cell the team tried. Every cell except two sets: her own and her brother's.</p>
+    <p>That pattern tells an immunohaematologist a lot. An antibody that hits everyone except the patient and a sibling points to an inherited absence of a high-prevalence antigen. Siblings can inherit the same two copies of a rare variant from their parents. The job was simply to name the missing antigen.</p>
+    <p>It would not be named. The samples went to the International Blood Group Reference Laboratory in Bristol. The antibody reacted with cells from a large panel of rare null phenotypes, so no known "missing antigen" explained it. The siblings' cells reacted with an extensive set of rare antisera against high-prevalence antigens, so they were not negative for any antigen we already knew about.</p>
+    <p>Seven years later, in 2020, she was pregnant again. New samples, same result, still no answer. By then the tools had changed. Whole-exome sequencing had already cracked several old puzzles in red cell serology, and the Bristol team turned it on this family.</p>
+    <p>One variant survived their filters. It sat in a gene nobody had linked to a blood group before: <em class="gene">F11R</em>, which makes JAM-A. The acknowledgements of the paper carry a lovely detail. Dr Frances Spring had long believed that JAM-A would carry a blood group one day. She was right.</p>
+  </div>
+</section>
+
+<div class="pull">
+  <p>"An antibody that reacts with everyone except you and your brother is your family history written in plasma."</p>
+  <cite>Teaching line · Blood🩸Doctor</cite>
+</div>
+
+<!-- LENS 2 SCIENCE -->
+<section aria-labelledby="science">
+  <div class="sec-head"><span class="label">Lens 2 · The science · Bench</span></div>
+  <h2 id="science">Meet JAM-A: the protein behind the new group</h2>
+  <hr class="rule">
+
+  <div class="mech">
+  <figure>
+    <svg viewBox="0 0 420 560" role="img" aria-label="Schematic of JAM-A, not to scale: two extracellular immunoglobulin domains, D1 at the top with the cis and trans binding motifs, and D2 below. Arg215, the JIMI antigen, is marked on D2 with its side chain pointing outwards; JIMI-negative people have Gln215 at this position. Below D2 is a single transmembrane segment crossing the membrane and a short cytoplasmic tail.">
+      <rect x="0" y="0" width="420" height="560" rx="12" style="fill:var(--panel)"/>
+      <text x="20" y="30" font-size="13" letter-spacing="1.2" style="fill:var(--faint)">OUTSIDE THE CELL (PLASMA)</text>
+      <!-- D1 -->
+      <ellipse cx="200" cy="120" rx="74" ry="62" stroke-width="2" style="fill:var(--card);stroke:var(--clay)"/>
+      <text x="200" y="112" text-anchor="middle" font-size="20" style="font-family:var(--serif);fill:var(--fg)">D1</text>
+      <text x="200" y="132" text-anchor="middle" font-size="13" style="fill:var(--muted)">V-set Ig domain</text>
+      <text x="200" y="148" text-anchor="middle" font-size="13" style="fill:var(--muted)">N-terminus</text>
+      <!-- D1 labels -->
+      <line x1="126" y1="100" x2="70" y2="78" stroke-width="1" style="stroke:var(--faint)"/>
+      <text x="14" y="62" font-size="13" style="fill:var(--fg)">cis dimer site</text>
+      <text x="14" y="76" font-size="13" style="fill:var(--muted);font-family:var(--mono)">R59 V60 E61</text>
+      <line x1="274" y1="100" x2="330" y2="78" stroke-width="1" style="stroke:var(--faint)"/>
+      <text x="300" y="62" font-size="13" style="fill:var(--fg)">trans site</text>
+      <text x="300" y="76" font-size="13" style="fill:var(--muted);font-family:var(--mono)">N43 N44 P45</text>
+      <!-- linker -->
+      <line x1="200" y1="182" x2="200" y2="212" stroke-width="3" style="stroke:var(--fg)"/>
+      <!-- D2 -->
+      <ellipse cx="200" cy="272" rx="74" ry="62" stroke-width="2" style="fill:var(--card);stroke:var(--clay)"/>
+      <text x="200" y="266" text-anchor="middle" font-size="20" style="font-family:var(--serif);fill:var(--fg)">D2</text>
+      <text x="200" y="286" text-anchor="middle" font-size="13" style="fill:var(--muted)">I-set Ig domain</text>
+      <!-- Arg215 -->
+      <circle cx="274" cy="262" r="11" style="fill:var(--clay)"/>
+      <line x1="285" y1="262" x2="318" y2="252" stroke-width="3" style="stroke:var(--clay)"/>
+      <text x="300" y="228" font-size="15" font-weight="600" style="fill:var(--clay-ink)">Arg215</text>
+      <text x="300" y="243" font-size="13" style="fill:var(--muted)">JIMI antigen</text>
+      <text x="296" y="300" font-size="13" style="fill:var(--olive)">Gln215 in</text>
+      <text x="296" y="315" font-size="13" style="fill:var(--olive)">JIMI-negative</text>
+      <!-- Asn185 -->
+      <circle cx="126" cy="282" r="7" style="fill:var(--olive)"/>
+      <line x1="119" y1="282" x2="80" y2="296" stroke-width="1.5" style="stroke:var(--olive)"/>
+      <text x="14" y="312" font-size="13" style="fill:var(--fg)">Asn185 glycan</text>
+      <text x="14" y="326" font-size="13" style="fill:var(--muted)">other end of D2</text>
+      <text x="212" y="362" font-size="13" style="fill:var(--muted)">integrin αLβ2 binds D2</text>
+      <!-- stalk & membrane -->
+      <line x1="200" y1="334" x2="200" y2="402" stroke-width="3" style="stroke:var(--fg)"/>
+      <rect x="0" y="402" width="420" height="44" style="fill:var(--oat)"/>
+      <g opacity=".55" style="fill:var(--cell)">
+        <circle cx="16" cy="410" r="5"/><circle cx="40" cy="410" r="5"/><circle cx="64" cy="410" r="5"/><circle cx="88" cy="410" r="5"/><circle cx="112" cy="410" r="5"/><circle cx="136" cy="410" r="5"/><circle cx="160" cy="410" r="5"/><circle cx="240" cy="410" r="5"/><circle cx="264" cy="410" r="5"/><circle cx="288" cy="410" r="5"/><circle cx="312" cy="410" r="5"/><circle cx="336" cy="410" r="5"/><circle cx="360" cy="410" r="5"/><circle cx="384" cy="410" r="5"/><circle cx="408" cy="410" r="5"/>
+        <circle cx="16" cy="438" r="5"/><circle cx="40" cy="438" r="5"/><circle cx="64" cy="438" r="5"/><circle cx="88" cy="438" r="5"/><circle cx="112" cy="438" r="5"/><circle cx="136" cy="438" r="5"/><circle cx="160" cy="438" r="5"/><circle cx="240" cy="438" r="5"/><circle cx="264" cy="438" r="5"/><circle cx="288" cy="438" r="5"/><circle cx="312" cy="438" r="5"/><circle cx="336" cy="438" r="5"/><circle cx="360" cy="438" r="5"/><circle cx="384" cy="438" r="5"/><circle cx="408" cy="438" r="5"/>
+      </g>
+      <rect x="192" y="398" width="16" height="52" rx="4" style="fill:var(--clay)"/>
+      <text x="220" y="429" font-size="13" style="fill:var(--fg)">single transmembrane pass</text>
+      <!-- tail -->
+      <path d="M200 450 C 200 480, 230 486, 226 512" fill="none" stroke-width="3" style="stroke:var(--fg)"/>
+      <text x="238" y="496" font-size="13" style="fill:var(--fg)">39-amino-acid tail</text>
+      <text x="238" y="511" font-size="13" style="fill:var(--muted)">binds Csk in platelets</text>
+      <text x="20" y="545" font-size="13" letter-spacing="1.2" style="fill:var(--faint)">INSIDE THE CELL</text>
+    </svg>
+    <figcaption>JAM-A, schematic, not to scale. Two extracellular Ig domains. On the crystal structure (PDB 1NBQ), Arg215 sits on D2 with its side chain facing the plasma; JIMI-negative people have Gln215 here. Positions within each domain are illustrative.</figcaption>
+  </figure>
+
+  <p><strong>What JAM-A is.</strong> JAM-A belongs to the immunoglobulin superfamily. Picture a short arm sticking out of the cell. It has two "knuckles" outside the cell, called Ig domains. The outer one (D1) is a V-set domain at the N-terminus. The one nearer the membrane (D2) is an I-set domain. Then comes a single pass through the membrane and a short 39-amino-acid tail inside the cell.</p>
+  <p><strong>Where it lives.</strong> JAM-A is expressed on several cell types, including epithelial and endothelial cells (where it sits in tight junctions), platelets, red cells and other blood cells. It has even been described as a marker of long-term repopulating haematopoietic stem cells.</p>
+  <p><strong>What it does.</strong> JAM-A likes to hold hands. Two molecules on the same cell pair up side by side (a cis dimer, through the R59-V60-E61 motif on D1). Molecules on neighbouring cells grip each other across the gap (a trans interaction, through N43-N44-P45, also on D1). D2 is the docking site for the leucocyte integrin αLβ2 (LFA-1).</p>
+  <p><strong>Why haematologists already knew it.</strong> In platelets, JAM-A keeps the fibrinogen receptor αIIbβ3 switched off. Its tail holds Csk kinase, which keeps the integrin inactive. When the platelet is activated, the tail gets phosphorylated, Csk lets go, and αIIbβ3 can switch on. JAM-A knockout mice show thrombotic and other problems.</p>
+  <p><strong>What it does on red cells.</strong> Nobody knows yet. The authors suggest it may help hold erythroblastic islands together during red cell production, the same role proposed for the red cell adhesion molecules BCAM (Lutheran) and ICAM-4 (LW).</p>
+  </div>
+
+  <h3 style="margin-top:28px">The one-letter change</h3>
+  <p>Codon 215 of <em class="gene">F11R</em> spans nucleotides 643 to 645. The variant swaps the middle letter, G to A. That turns CG· (arginine) into CA· (glutamine). Arginine carries a positive charge on a long side chain. Glutamine is similar in size but neutral. Modelling on the crystal structure shows both side chains pointing out into the plasma, and the authors describe the change as conservative, with little structural alteration.</p>
+
+  <div class="chain" aria-label="Analogy, mechanism, consequence">
+    <div><span class="label">Analogy</span><p>JAM-A is a name badge every red cell wears. JIMI-positive people have one letter printed as "R". This family's badge says "Q". Same badge, same shape, one letter different. Her immune system read that letter and called it foreign.</p></div>
+    <div><span class="label" style="color:var(--olive)">Mechanism</span><p>Homozygous p.Arg215Gln removes the Arg215 epitope from the surface of D2. The protein is still made and still reaches the membrane, at lower levels on the siblings' mature red cells. She made an alloantibody against Arg215 JAM-A; the authors report that it formed during pregnancy.</p></div>
+    <div><span class="label" style="color:var(--rust)">Consequence</span><p>Her antibody reacted with every red cell tested apart from the siblings'. Because JAM-A sits on platelets too, the antibody bound platelets as well as red cells in the laboratory. Whether that matters clinically is not yet known.</p></div>
+  </div>
+
+  <div class="callout">
+    <span class="label">A detail worth holding on to</span>
+    <h3>JIMI-negative is not JAM-A null</h3>
+    <p>A monoclonal anti-JAM-A still labelled the siblings' red cells by flow cytometry. Their expression was lower than all eight controls, and the patient had the lowest level of all. The authors report that Arg215 and Gln215 JAM-A were expressed equally in CHO and HEK cells (data not shown in the paper). Their explanation is that the lower level on red cells arises from membrane remodelling during the last stages of red cell maturation, rather than from how the protein is made. This is a hypothesis; it was not tested directly.</p>
+  </div>
+</section>
+
+<!-- EVIDENCE CHAIN -->
+<section aria-labelledby="proof">
+  <div class="sec-head"><span class="label">The detective work · How they proved it</span></div>
+  <h2 id="proof">Six steps from "unknown antibody" to a new system</h2>
+  <hr class="rule">
+  <p style="max-width:720px">Finding a rare variant is not enough. The ISBT needs proof that the antibody binds the protein, and that it binds the protein because of that one amino acid. Here is the chain the team built, in the order they needed it.</p>
+
+  <ol class="steps">
+    <li class="step"><div class="n">1</div><div>
+      <h3>Serology</h3>
+      <div class="q">Is this an antibody to a known antigen?</div>
+      <p>LISS tube IAT, moderate strength, all cells positive except the siblings'. An active eluate was incompatible with a large panel of rare null cells. The siblings' cells were positive with every rare antiserum tried.</p>
+      <span class="ans">Answer: no known specificity</span>
+    </div></li>
+    <li class="step"><div class="n">2</div><div>
+      <h3>Enzyme and chemical profile</h3>
+      <div class="q">What kind of structure carries the antigen?</div>
+      <p>Resistant to papain, trypsin, pronase and DTT. Destroyed by chymotrypsin. A useful fingerprint that matched nothing on file.</p>
+      <span class="ans">Answer: a chymotrypsin-sensitive protein epitope</span>
+    </div></li>
+    <li class="step"><div class="n">3</div><div>
+      <h3>Whole-exome sequencing of both siblings</h3>
+      <div class="q">Which gene is different?</div>
+      <p>No variants in known blood group genes explained it. Filters kept shared, rare (&lt;0.01), homozygous coding variants that change a surface-exposed part of a red cell membrane protein. Only one variant passed: <span class="mono">F11R c.644G&gt;A, p.Arg215Gln</span>.</p>
+      <span class="ans">Answer: a candidate in JAM-A</span>
+    </div></li>
+    <li class="step"><div class="n">4</div><div>
+      <h3>Flow cytometry on red cells</h3>
+      <div class="q">Is JAM-A really on red cells, and does the patient's plasma behave like anti-JAM-A?</div>
+      <p>Mouse anti-JAM-A labelled all 8 control samples and, more weakly, the siblings' cells. Patient plasma labelled controls in the same way but did not bind the siblings' cells.</p>
+      <span class="ans">Answer: yes, and the pattern fits</span>
+    </div></li>
+    <li class="step key"><div class="n">5</div><div>
+      <h3>Recombinant JAM-A: the decisive test</h3>
+      <div class="q">Does the antibody see residue 215?</div>
+      <p>Both forms were built as soluble Fc fusion proteins. Arg215 Fc inhibited the patient's antibody; Gln215 Fc and a Lutheran Fc control did not. Mouse anti-JAM-A was inhibited by both forms, so both proteins kept the region that antibody binds. The authors took this as evidence that both were biologically active. On transfected CHO cells, the patient's eluate bound only Arg215 JAM-A cells.</p>
+      <span class="ans">Answer: the epitope is Arg215</span>
+    </div></li>
+    <li class="step"><div class="n">6</div><div>
+      <h3>Platelet adsorption and elution</h3>
+      <div class="q">Does the antibody bind the same protein on platelets?</div>
+      <p>Washed control platelets adsorbed the antibody from plasma. The eluate from platelets agglutinated control red cells but not the patient's. An anti-D control was not adsorbed, since platelets carry no RhD.</p>
+      <span class="ans">Answer: yes, red cells and platelets</span>
+    </div></li>
+  </ol>
+
+  <div class="tscroll">
+  <table>
+    <caption class="note" style="caption-side:bottom;text-align:left;padding-top:8px">Key: <strong>Binds</strong> or <strong>No binding</strong> = reaction with cells. <strong>Inhibited</strong> = the soluble Fc protein soaked up the antibody first, so it could no longer bind red cells. <strong>Not inhibited</strong> = the antibody still bound.</caption>
+    <thead><tr><th>Test</th><th>Patient antibody</th><th>Mouse anti-JAM-A</th><th>What it shows</th></tr></thead>
+    <tbody>
+      <tr><td>Control red cells</td><td>Binds</td><td>Binds</td><td>Both reagents reacted with control red cells</td></tr>
+      <tr><td>Siblings' red cells</td><td>No binding</td><td>Binds (lower)</td><td>JAM-A present, JIMI absent</td></tr>
+      <tr><td>Pre-incubated with Arg215 Fc</td><td><strong>Inhibited</strong></td><td>Inhibited</td><td>Arg215 carries the epitope</td></tr>
+      <tr><td>Pre-incubated with Gln215 Fc</td><td><strong>Not inhibited</strong></td><td>Inhibited</td><td>Gln215 protein keeps the mouse epitope but lacks JIMI</td></tr>
+      <tr><td>CHO cells with Arg215 JAM-A</td><td>Binds</td><td>Binds</td><td>Binding needs Arg215</td></tr>
+      <tr><td>CHO cells with Gln215 JAM-A</td><td>No binding</td><td>Binds</td><td>Confirms the above</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<div class="pull">
+  <p>"The mouse antibody was blocked by both proteins. Hers was blocked by only one. That single contrast is the whole proof."</p>
+  <cite>On step 5</cite>
+</div>
+
+<!-- LENS 3 -->
+<section aria-labelledby="stumble">
+  <div class="sec-head"><span class="label">Lens 3 · The stumbling block</span></div>
+  <h2 id="stumble">Why this took seven years</h2>
+  <hr class="rule">
+  <div class="cols">
+    <p>The antibody was never going to fit. Serology works by comparison. You match the antibody's pattern against cells and antisera that define antigens we already know. When the antigen belongs to a protein no one has linked to a blood group, every comparison comes back blank, and the case sits in the freezer.</p>
+    <p>The genetics held a second trap. Most variant pipelines rank changes by how badly they damage a protein. By that yardstick, p.Arg215Gln looks harmless. PolyPhen-2 called it benign (0.021). SIFT called it tolerated (0.76). AlphaMissense called it likely benign (0.112). A team hunting for "damaging" variants could have thrown it away. These tools estimate the likely effect of a change on protein function. They do not assess whether a surface amino-acid change can be seen by another person's immune system as an alloantigen. Nor did the study test JAM-A function directly. The Bristol filters asked a different question: is the change on the outside of a red cell membrane protein? That is the question that matters for a blood group.</p>
+  </div>
+
+  <div class="traps">
+    <div class="trap"><span class="label">Cognitive trap</span><p><strong>Anchoring on the known list.</strong> Assuming a pan-reactive antibody must target one of the existing systems, and repeating serology rather than changing the method.</p></div>
+    <div class="trap"><span class="label">False reassurance</span><p><strong>"Benign" in silico scores.</strong> Variant-effect tools estimate effects on protein function. They do not assess whether a surface change can act as an alloantigen.</p></div>
+    <div class="trap"><span class="label">The test that saved it</span><p><strong>Whole-exome sequencing of two affected siblings,</strong> filtered for shared homozygous, surface-exposed variants in red cell membrane proteins.</p></div>
+    <div class="trap"><span class="label">Alternatives considered</span><p><strong>Antibodies to known high-prevalence antigens:</strong> argued against by the rare null panel and rare antisera. <strong>Autoantibody:</strong> her plasma did not react with her own cells, which supports an alloantibody, though a negative autocontrol alone does not exclude every autoantibody.</p></div>
+  </div>
+
+  <div class="callout">
+    <span class="label">Red flag for the lab</span>
+    <h3>The sibling pattern is the clue</h3>
+    <p>A pan-reactive alloantibody with a compatible sibling points to an inherited missing antigen. If the specificity stays unresolved after reference serology, that is the moment to think about sequencing both affected relatives, not the moment to file it as "unidentified".</p>
+  </div>
+</section>
+
+<!-- BEDSIDE -->
+<section aria-labelledby="bedside">
+  <div class="sec-head"><span class="label">Bedside · What it means for patients</span></div>
+  <h2 id="bedside">What we know, and what we do not</h2>
+  <hr class="rule">
+
+  <div class="tscroll">
+  <table>
+    <thead><tr><th>Question</th><th>What the paper shows</th></tr></thead>
+    <tbody>
+      <tr><td>Was HDFN seen?</td><td>No HDFN was reported in four live births from six pregnancies. The paper does not link the two pregnancy losses to the antibody. One family cannot define the risk.</td></tr>
+      <tr><td>Can it cause a transfusion reaction?</td><td>Unknown. Neither sibling has been transfused.</td></tr>
+      <tr><td>Were the siblings unwell?</td><td>No associated pathology was reported. Both had normal Hb, MCV, MCH, RDW, platelet count and MPV. This fits with, but does not prove, normal JAM-A function.</td></tr>
+      <tr><td>Why does platelet binding matter?</td><td>The authors say any anti-JAM-A must be considered for effects on red cells and platelets, including fetal and neonatal alloimmune thrombocytopenia and platelet or granulocyte transfusion. Platelet binding was shown in vitro. FNAIT, platelet refractoriness and transfusion reactions were not shown.</td></tr>
+      <tr><td>How rare is the negative type?</td><td>The reported gnomAD global allele frequency is 0.0000044. That describes the variant allele, not the number of JIMI-negative people, and the paper does not estimate how common the negative phenotype is.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout warn">
+    <span class="label">Same protein, different cell</span>
+    <h3>An antigen can look different on different cells</h3>
+    <p>The authors point to a warning from a neighbouring system. Csa on red cells and HNA-3a on neutrophils are defined by the same amino acid in CTL2. Yet anti-HNA-3a does not bind red cells, while anti-Csa binds both. CTL2 has a small extracellular part buried among other membrane proteins. JAM-A holds its two Ig domains well clear of the membrane, which may be why anti-JIMI binds red cells and platelets alike.</p>
+  </div>
+
+  <h3 style="margin-top:32px">Practical points for a transfusion laboratory</h3>
+  <p class="note" style="margin:4px 0 12px">These are general principles for antibodies to high-prevalence antigens, applied to JAMA. They are my suggestions, not recommendations from the paper.</p>
+  <ul>
+    <li>Refer any unresolved pan-reactive alloantibody with a negative autocontrol to a national reference laboratory. In the UK, that is IBGRL via NHSBT.</li>
+    <li>Consider siblings early. They may be a useful first source for donor investigation, but compatibility and donor suitability still have to be assessed.</li>
+    <li>Plan pregnancies and elective surgery ahead with the blood service. Rare-donor registries and frozen rare units take time to mobilise.</li>
+    <li>If a JIMI-negative mother's baby is thrombocytopenic, keep the platelet question open and discuss it with the platelet immunology service.</li>
+  </ul>
+</section>
+
+<!-- PATIENT COMMUNICATION -->
+<section aria-labelledby="talk">
+  <div class="sec-head"><span class="label">Talking to the patient</span></div>
+  <h2 id="talk">How I would explain it in clinic</h2>
+  <hr class="rule">
+  <p class="speak">"Your blood has a very rare type. Almost everyone carries a small marker on their red cells, and yours do not have it. At some point your body made an antibody against that marker. The main practical effect we know about is that finding matching blood for you is harder, because most donors carry the marker. In the study, there was no sign of the antibody causing blood problems in four babies born alive, which is reassuring. But only one family has been studied, so we do not yet know all the possible effects. If you need a transfusion, an operation or care in a future pregnancy, tell your team early, so they can involve transfusion specialists and plan ahead."</p>
+</section>
+
+<!-- LENS 4 -->
+<section aria-labelledby="stamp">
+  <div class="sec-head"><span class="label">Lens 4 · The stamp</span></div>
+  <h2 id="stamp">Five lines to carry for life</h2>
+  <hr class="rule">
+  <div class="stamps">
+    <div class="stamp"><p>A variant scored benign can still create a blood group, because pathogenicity tools ask whether the protein works, not whether someone else's immune system can see the change.</p></div>
+    <div class="stamp"><p>JIMI-negative cells still carry JAM-A, because the variant alters one surface residue rather than deleting the protein, so a monoclonal anti-JAM-A will still label them.</p></div>
+    <div class="stamp"><p>The proof came from the patient's own plasma: Arg215 JAM-A blocked it and Gln215 JAM-A did not, while a mouse antibody was blocked by both.</p></div>
+    <div class="stamp"><p>Anti-JIMI bound platelets as well as red cells in the laboratory, because JAM-A sits on both, so effects on fetal platelets and platelet support stay open questions until shown.</p></div>
+    <div class="stamp"><p>When an antibody reacts with everyone except a sibling, the family is the clue, and siblings are a sensible first place to look for donors, though compatibility and suitability still have to be assessed.</p></div>
+  </div>
+</section>
+
+<!-- MCQs -->
+<section aria-labelledby="mcq">
+  <div class="sec-head"><span class="label">Test yourself · FRCPath / FCPS style</span></div>
+  <h2 id="mcq">Four single best answer questions</h2>
+  <hr class="rule">
+  <p class="note">Tap an option to see the answer and why the others are wrong.</p>
+  <div id="mcqs"></div>
+</section>
+
+
+
+<!-- CONTEXT -->
+<section aria-labelledby="context">
+  <div class="sec-head"><span class="label">The bigger picture</span></div>
+  <h2 id="context">A decade of new blood groups</h2>
+  <hr class="rule">
+  <p style="max-width:720px">Before JAMA there were 398 accepted blood group antigens. 371 had a known genetic basis and sat in 48 systems. Nine of those 48 were found in the last five years alone. The authors count 12 other new systems ratified in the past decade, and a pattern is emerging: several of the newest blood groups sit on proteins we first knew from other blood cells. CD36 on platelets. Mal on leucocytes. CTL2 on granulocytes. And now JAM-A. All blood cells share a common precursor, so the overlap makes sense.</p>
+  <p class="note">Recent relatives, from the same laboratory and its collaborators (as cited in the paper):</p>
+  <div class="family">
+    <span class="chip">EMP3 · MAM (2020)</span>
+    <span class="chip">PIEZO1 · Er (2023)</span>
+    <span class="chip">SLC44A2 / CTL2 · Cs and HNA-3 (2023, 2025)</span>
+    <span class="chip">MAL · AnWj (2024)</span>
+    <span class="chip now">F11R / JAM-A · JAMA (2026)</span>
+  </div>
+</section>
+
+<div class="callout" style="margin-top:56px">
+  <span class="label">Two errors to avoid in JAMA diagrams</span>
+  <p style="margin-top:6px">First, JAM-A has two extracellular Ig domains, D1 and D2. Drawings with three extracellular beads are wrong. Second, the paper does not show platelet refractoriness, FNAIT or transfusion reactions. The authors list platelet and granulocyte transfusion and FNAIT only as areas to consider, so present them as open questions.</p>
+</div>
+
+<!-- REFERENCES -->
+<section aria-labelledby="refs" class="refs">
+  <div class="sec-head"><span class="label">Evidence</span></div>
+  <h2 id="refs">Sources</h2>
+  <hr class="rule">
+  <ol>
+    <li><strong>Primary paper.</strong> Mankelow TJ, Tilley LA, Karamatic Crew V, Jones B, Izak M, Muncher L, Yahalom V, Thornton NM. Identification of a novel high-prevalence red blood cell antigen on junctional adhesion molecule-A defines a new blood group system. <em>Vox Sang</em> 2026. Published online 24 August 2026, ahead of print. <a href="https://doi.org/10.1111/vox.70352">doi:10.1111/vox.70352</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/42637667/">PMID 42637667</a>. Open access, CC BY-NC-ND. GenBank PZ337576.</li>
+    <li>ISBT. Meet JAMA: the 49th ISBT blood group system. News item, 14 September 2026. <a href="https://www.isbtweb.org/resource/meet-jama-the-49th-isbt-blood-group-system.html">isbtweb.org</a> · <a href="https://blooddatabase.isbtweb.org/">ISBT Blood Group Database</a></li>
+    <li>Prota AE et al. Crystal structure of human junctional adhesion molecule 1: implications for reovirus binding. <em>Proc Natl Acad Sci U S A</em> 2003;100(9):5366–71. <a href="https://doi.org/10.1073/pnas.0937718100">doi:10.1073/pnas.0937718100</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/12697893/">PMID 12697893</a></li>
+    <li>Kostrewa D et al. X-ray structure of junctional adhesion molecule: structural basis for homophilic adhesion via a novel dimerization motif. <em>EMBO J</em> 2001;20(16):4391–8. <a href="https://doi.org/10.1093/emboj/20.16.4391">doi:10.1093/emboj/20.16.4391</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/11500366/">PMID 11500366</a></li>
+    <li>Duval R et al. The neutrophil antigen 3a/b polymorphism in SLC44A2 unexpectedly encodes the Csa/Csb red cell antigens. <em>Blood</em> 2025;146(2):247–53. <a href="https://doi.org/10.1182/blood.2024026285">doi:10.1182/blood.2024026285</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/40090003/">PMID 40090003</a></li>
+    <li>Tilley LA et al. Deletions in the MAL gene result in loss of Mal protein, defining the rare inherited AnWj-negative blood group phenotype. <em>Blood</em> 2024;144(26):2735–47. <a href="https://doi.org/10.1182/blood.2024025099">doi:10.1182/blood.2024025099</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/39158068/">PMID 39158068</a></li>
+    <li>Karamatic Crew V et al. Missense mutations in PIEZO1, which encodes the Piezo1 mechanosensor protein, define Er red blood cell antigens. <em>Blood</em> 2023;141(2):135–46. <a href="https://doi.org/10.1182/blood.2022016504">doi:10.1182/blood.2022016504</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/36122374/">PMID 36122374</a></li>
+    <li>Thornton N et al. Disruption of the tumour-associated EMP3 enhances erythroid proliferation and causes the MAM-negative phenotype. <em>Nat Commun</em> 2020;11(1):3569. <a href="https://doi.org/10.1038/s41467-020-17060-4">doi:10.1038/s41467-020-17060-4</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/32678083/">PMID 32678083</a></li>
+  </ol>
+  <p class="note">Every clinical and laboratory statement on this page comes from reference 1 unless marked otherwise. All PMIDs and DOIs were checked against PubMed on 30 September 2026. These papers support the science on this page; none of them is a clinical management guideline. The codon arithmetic and the arginine and glutamine chemistry are standard biochemistry. The practical laboratory points and the clinic script are my own suggestions and are labelled as such. Treatment lines and clinical trials do not apply to a new antigen and are left out.</p>
+  <p class="note">Blood🩸Doctor · contact@blooddoctor.co</p>
+</section>
+
+</div>
+
+<script>
+const Q = [
+  {dom:"Investigation", stem:"A pregnant woman, never transfused, has a moderate-strength antibody reactive by LISS IAT with all panel cells, including a large rare null panel. Her plasma does not react with her own cells, and her brother's red cells are the only other non-reactive cells found. The antibody is resistant to papain, trypsin, pronase and DTT but sensitive to chymotrypsin. Reference serology cannot assign a specificity. What is the most useful next step?",
+   opts:["Repeat antibody identification with a larger routine panel","Whole-exome sequencing of the patient and her brother","Direct antiglobulin test on her red cells","Adsorb her plasma with rabbit erythrocyte stroma","Report it as a warm autoantibody"], a:1,
+   why:"The sibling pattern points to an inherited absence of a high-prevalence antigen. When serology finds no known specificity, sequencing both affected relatives and filtering for shared homozygous surface-exposed variants in red cell membrane proteins is how JAMA was found.",
+   not:["A bigger routine panel cannot help: every cell carries the antigen.","A DAT looks for antibody on her own cells; the problem is an alloantibody against everyone else's.","Rabbit stroma adsorption removes cold antibodies such as anti-I; it will not reveal this specificity.","Her plasma did not react with her own cells, which points to an alloantibody rather than an autoantibody."],
+   stamp:"When serology runs out of comparisons, sequence the family."},
+  {dom:"Mechanism", stem:"PolyPhen-2 calls F11R p.Arg215Gln benign, SIFT calls it tolerated and AlphaMissense likely benign. Yet it defines the JIMI-negative phenotype. What best explains this?",
+   opts:["The prediction tools were wrong about the protein's function","The variant removes JAM-A from the red cell membrane","The tools predict loss of function, not whether a surface change is immunogenic","The variant creates a new glycosylation site","Only heterozygotes can make anti-JIMI"], a:2,
+   why:"The change is conservative and the protein keeps its shape, so function-based tools score it as harmless. But the side chain faces the plasma, and a different amino acid on the surface is enough for another person's immune system to see a difference.",
+   not:["The siblings' normal blood counts fit with preserved function, though the study did not test JAM-A function directly.","JAM-A is still present on their red cells, only at a lower level.","Nothing in the paper suggests a new glycan; Asn185 glycosylation is at the other end of D2.","The antibody maker is homozygous for Gln215; heterozygotes carry Arg215 and would not make it."],
+   stamp:"Benign for the protein is not the same as invisible to the immune system."},
+  {dom:"Proof", stem:"Which paired inhibition result most directly shows that the patient's antibody targets residue 215 of JAM-A?",
+   opts:["Lower JAM-A expression on the siblings' red cells by flow cytometry","Adsorption of the antibody by control platelets","Arg215 Fc blocks her antibody, Gln215 Fc does not, and a mouse anti-JAM-A is blocked by both","Both siblings share the homozygous F11R variant","The antibody is destroyed by chymotrypsin"], a:2,
+   why:"This paired result tests the one amino acid, while the mouse antibody result shows both proteins kept a shared anti-JAM-A epitope. The CHO cell experiment repeats the same answer on whole cells.",
+   not:["Lower expression is a secondary finding and does not show what the antibody binds.","Platelet adsorption shows the target sits on platelets, not which residue it is.","A shared variant is an association; it does not prove the antibody binds that protein.","Chymotrypsin sensitivity describes the epitope's behaviour, not its identity."],
+   stamp:"Two antibodies, two proteins, one difference: that is the proof."},
+  {dom:"Clinical", stem:"A JIMI-negative woman with anti-JIMI is referred in a new pregnancy. Apart from red cell compatibility, which additional issue do the authors say anti-JAM-A antibodies must be considered for?",
+   opts:["Heparin-induced thrombocytopenia","Effects on platelets, including fetal and neonatal alloimmune thrombocytopenia","Acquired von Willebrand syndrome","Thrombotic thrombocytopenic purpura","Paroxysmal nocturnal haemoglobinuria"], a:1,
+   why:"JAM-A is expressed on platelets and the antibody was adsorbed by and eluted from platelets. The authors say future anti-JAM-A antibodies will need to be considered for effects on red cells and platelets, including FNAIT and platelet or granulocyte transfusion. This is a possibility, not an observed event.",
+   not:["HIT is driven by antibodies to PF4 and heparin complexes.","Acquired VWS involves VWF loss, not JAM-A.","TTP is caused by ADAMTS13 deficiency.","PNH comes from loss of GPI-anchored proteins in a clone."],
+   stamp:"An antigen on two cell types means two kinds of risk to think about."}
+];
+const root = document.getElementById('mcqs');
+const L = "ABCDE";
+Q.forEach((q,i)=>{
+  const box = document.createElement('div'); box.className='mcq';
+  box.innerHTML = `<span class="label" id="ql${i}">Question ${i+1} · ${q.dom}</span><p class="stem" id="qs${i}">${q.stem}</p><div class="opts" role="group" aria-labelledby="ql${i} qs${i}"></div><p class="status" role="status" aria-live="polite"></p><div class="expl" hidden></div>`;
+  const opts = box.querySelector('.opts'), ex = box.querySelector('.expl'), st = box.querySelector('.status');
+  q.opts.forEach((t,j)=>{
+    const b=document.createElement('button'); b.className='opt'; b.type='button'; b.id=`q${i}o${j}`;
+    b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<b>${L[j]}</b>${t}`;
+    b.addEventListener('click',()=>{
+      opts.querySelectorAll('.opt').forEach((o,k)=>{o.classList.remove('right','wrong'); o.setAttribute('aria-pressed', k===j ? 'true':'false'); if(k===q.a)o.classList.add('right');});
+      if(j!==q.a) b.classList.add('wrong');
+      const others = q.opts.map((o,k)=>k).filter(k=>k!==q.a);
+      st.textContent = `You chose ${L[j]}. ${j===q.a ? 'Correct.' : 'Not correct. The answer is '+L[q.a]+'.'}`;
+      ex.innerHTML = `<strong>Answer ${L[q.a]}.</strong> ${q.why}<ul>${others.map((k,n)=>`<li><b>${L[k]}:</b> ${q.not[n]}</li>`).join('')}</ul><em>Stamp: ${q.stamp}</em>`;
+      ex.hidden=false;
+    });
+    opts.appendChild(b);
+  });
+  root.appendChild(box);
+});
+</script>
+
+</body>
+</html>
