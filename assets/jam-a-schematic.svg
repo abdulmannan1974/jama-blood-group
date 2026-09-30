@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif" viewBox="0 0 420 560" role="img" aria-label="Schematic of JAM-A, not to scale: two extracellular immunoglobulin domains, D1 at the top with the cis and trans binding motifs, and D2 below. Arg215, the JIMI antigen, is marked on D2 with its side chain pointing outwards; JIMI-negative people have Gln215 at this position. Below D2 is a single transmembrane segment crossing the membrane and a short cytoplasmic tail.">
+      <rect x="0" y="0" width="420" height="560" rx="12" style="fill:#F0EEE6"/>
+      <text x="20" y="30" font-size="13" letter-spacing="1.2" style="fill:#87867F">OUTSIDE THE CELL (PLASMA)</text>
+      <!-- D1 -->
+      <ellipse cx="200" cy="120" rx="74" ry="62" stroke-width="2" style="fill:#FFFFFF;stroke:#D97757"/>
+      <text x="200" y="112" text-anchor="middle" font-size="20" style="font-family:Georgia, serif;fill:#141413">D1</text>
+      <text x="200" y="132" text-anchor="middle" font-size="13" style="fill:#5E5D57">V-set Ig domain</text>
+      <text x="200" y="148" text-anchor="middle" font-size="13" style="fill:#5E5D57">N-terminus</text>
+      <!-- D1 labels -->
+      <line x1="126" y1="100" x2="70" y2="78" stroke-width="1" style="stroke:#87867F"/>
+      <text x="14" y="62" font-size="13" style="fill:#141413">cis dimer site</text>
+      <text x="14" y="76" font-size="13" style="fill:#5E5D57;font-family:Menlo, Consolas, monospace">R59 V60 E61</text>
+      <line x1="274" y1="100" x2="330" y2="78" stroke-width="1" style="stroke:#87867F"/>
+      <text x="300" y="62" font-size="13" style="fill:#141413">trans site</text>
+      <text x="300" y="76" font-size="13" style="fill:#5E5D57;font-family:Menlo, Consolas, monospace">N43 N44 P45</text>
+      <!-- linker -->
+      <line x1="200" y1="182" x2="200" y2="212" stroke-width="3" style="stroke:#141413"/>
+      <!-- D2 -->
+      <ellipse cx="200" cy="272" rx="74" ry="62" stroke-width="2" style="fill:#FFFFFF;stroke:#D97757"/>
+      <text x="200" y="266" text-anchor="middle" font-size="20" style="font-family:Georgia, serif;fill:#141413">D2</text>
+      <text x="200" y="286" text-anchor="middle" font-size="13" style="fill:#5E5D57">I-set Ig domain</text>
+      <!-- Arg215 -->
+      <circle cx="274" cy="262" r="11" style="fill:#D97757"/>
+      <line x1="285" y1="262" x2="318" y2="252" stroke-width="3" style="stroke:#D97757"/>
+      <text x="300" y="228" font-size="15" font-weight="600" style="fill:#B85C3E">Arg215</text>
+      <text x="300" y="243" font-size="13" style="fill:#5E5D57">JIMI antigen</text>
+      <text x="296" y="300" font-size="13" style="fill:#788C5D">Gln215 in</text>
+      <text x="296" y="315" font-size="13" style="fill:#788C5D">JIMI-negative</text>
+      <!-- Asn185 -->
+      <circle cx="126" cy="282" r="7" style="fill:#788C5D"/>
+      <line x1="119" y1="282" x2="80" y2="296" stroke-width="1.5" style="stroke:#788C5D"/>
+      <text x="14" y="312" font-size="13" style="fill:#141413">Asn185 glycan</text>
+      <text x="14" y="326" font-size="13" style="fill:#5E5D57">other end of D2</text>
+      <text x="212" y="362" font-size="13" style="fill:#5E5D57">integrin αLβ2 binds D2</text>
+      <!-- stalk & membrane -->
+      <line x1="200" y1="334" x2="200" y2="402" stroke-width="3" style="stroke:#141413"/>
+      <rect x="0" y="402" width="420" height="44" style="fill:#E3DACC"/>
+      <g opacity=".55" style="fill:#C9503F">
+        <circle cx="16" cy="410" r="5"/><circle cx="40" cy="410" r="5"/><circle cx="64" cy="410" r="5"/><circle cx="88" cy="410" r="5"/><circle cx="112" cy="410" r="5"/><circle cx="136" cy="410" r="5"/><circle cx="160" cy="410" r="5"/><circle cx="240" cy="410" r="5"/><circle cx="264" cy="410" r="5"/><circle cx="288" cy="410" r="5"/><circle cx="312" cy="410" r="5"/><circle cx="336" cy="410" r="5"/><circle cx="360" cy="410" r="5"/><circle cx="384" cy="410" r="5"/><circle cx="408" cy="410" r="5"/>
+        <circle cx="16" cy="438" r="5"/><circle cx="40" cy="438" r="5"/><circle cx="64" cy="438" r="5"/><circle cx="88" cy="438" r="5"/><circle cx="112" cy="438" r="5"/><circle cx="136" cy="438" r="5"/><circle cx="160" cy="438" r="5"/><circle cx="240" cy="438" r="5"/><circle cx="264" cy="438" r="5"/><circle cx="288" cy="438" r="5"/><circle cx="312" cy="438" r="5"/><circle cx="336" cy="438" r="5"/><circle cx="360" cy="438" r="5"/><circle cx="384" cy="438" r="5"/><circle cx="408" cy="438" r="5"/>
+      </g>
+      <rect x="192" y="398" width="16" height="52" rx="4" style="fill:#D97757"/>
+      <text x="220" y="429" font-size="13" style="fill:#141413">single transmembrane pass</text>
+      <!-- tail -->
+      <path d="M200 450 C 200 480, 230 486, 226 512" fill="none" stroke-width="3" style="stroke:#141413"/>
+      <text x="238" y="496" font-size="13" style="fill:#141413">39-amino-acid tail</text>
+      <text x="238" y="511" font-size="13" style="fill:#5E5D57">binds Csk in platelets</text>
+      <text x="20" y="545" font-size="13" letter-spacing="1.2" style="fill:#87867F">INSIDE THE CELL</text>
+    <text x="20" y="555" font-size="10" fill="#87867F">Schematic, not to scale. Blood Doctor · after Mankelow et al. Vox Sang 2026</text></svg>
